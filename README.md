@@ -10,6 +10,7 @@ Submitted by:
 Time spent: **X** hours spent in total
 
 ## Summary
+brainstorming doc: https://hackmd.io/Xy5ZgHy5Qr-EOZplMaFBEA
 
 This document provides an overview, project spec, and wireframes for our team's capstone project: An app that **short description of your app**
 
