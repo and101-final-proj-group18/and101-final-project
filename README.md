@@ -1,11 +1,11 @@
 <!-- (This is a comment) INSTRUCTIONS: Go through this page and fill out any **bolded** entries with their correct values.-->
 
-# AND101 Milestone 1 - **Team/App Name**
+# AND101 Milestone 1 - **NearByEats**
 
 Submitted by:
-- **Team Member 1 Name Here**
-- **Team Member 2 Name Here**
-- **etc**
+- **Malika Iyer**
+- **Joshua Olaoye**
+- **Mari Hirota**
 
 Time spent: **X** hours spent in total
 
@@ -22,7 +22,7 @@ If we had to describe this milestone in three (3) emojis, they would be: **emoji
 
 The following REQUIRED features are completed:
 
-- [ ] Creation of GitHub Organization and Group Project Repo
+- [x] Creation of GitHub Organization and Group Project Repo
 - [ ] Updated Course Portal group info with Group Name and App Description
 
 The following REQUIRED files are included:
