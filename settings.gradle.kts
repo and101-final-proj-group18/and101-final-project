@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "and101-final-project"
+rootProject.name = "NearbyEats"
 include(":app")
  

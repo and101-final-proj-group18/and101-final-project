@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.and101_final_project"
+    namespace = "com.example.nearbyeats"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.and101_final_project"
+        applicationId = "com.example.nearbyeats"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -50,4 +50,6 @@ dependencies {
 
     implementation("com.github.bumptech.glide:glide:4.12.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
+
+    implementation("com.google.android.gms:play-services-location:17.0.0")
 }

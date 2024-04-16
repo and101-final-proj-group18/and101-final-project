@@ -21,20 +21,15 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/editTextTextPersonName"
+                android:theme="@style/search_bar"
+                android:id="@+id/search_input"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginRight="16dp"
-                android:background="@drawable/search_border"
-                android:drawableStart="@drawable/icon_start"
-                android:drawableEnd="@drawable/icon_end"
                 android:drawablePadding="24dp"
-                android:ems="14"
-                android:hint="Name"
-                android:textColorHint="@color/black"
-                android:inputType="textPersonName"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
+                android:background="@drawable/search_border"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -45,6 +40,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"

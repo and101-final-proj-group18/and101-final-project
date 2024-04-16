@@ -1,4 +1,4 @@
-package com.example.and101_final_project
+package com.example.nearbyeats
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this@MainActivity, HomeActivity::class.java)
             startActivity(intent)
+            finish()
         }, 3000)
     }
 }

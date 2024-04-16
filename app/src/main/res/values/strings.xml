@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">and101-final-project</string>
+    <string name="app_name">NearbyEats</string>
+    <string name="search_prompt">Search by cuisine</string>
+    <string name="restaurant_name">Restaurant</string>
+    <string name="direction">Address</string>
+    <string name="ratings_reviews">Ratings (Number of reviews)</string>
+    <string name="price_range">Price range in usd</string>
+    <string name="image_description">The featured image of the restaurant</string>
 </resources>

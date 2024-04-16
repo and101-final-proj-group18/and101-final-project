@@ -7,4 +7,6 @@
     <color name="primary_500">#8E4D30</color>
     <color name="primary_700">#542E1C</color>
 
+    <color name="neutral">#ECE6F0</color>
+    <color name="greyscale">#999999</color>
 </resources>
