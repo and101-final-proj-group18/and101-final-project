@@ -26,12 +26,12 @@
                 android:layout_height="56dp"
                 android:layout_marginRight="16dp"
                 android:background="@drawable/search_border"
-                android:drawableStart="@drawable/baseline_location_on_24"
-                android:drawableEnd="@drawable/baseline_search_24"
+                android:drawableStart="@drawable/icon_start"
+                android:drawableEnd="@drawable/icon_end"
                 android:drawablePadding="24dp"
                 android:ems="14"
                 android:hint="Name"
-                android:hintColor="@color/white"
+                android:textColorHint="@color/black"
                 android:inputType="textPersonName"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
@@ -39,6 +39,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.appcompat.widget.Toolbar>
