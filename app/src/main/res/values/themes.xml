@@ -44,6 +44,7 @@
         <item name="android:ems">14</item>
         <item name="android:textStyle">normal</item>
         <item name="android:hint">@string/search_prompt</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textColorHint">@color/greyscale</item>
         <item name="android:inputType">textVisiblePassword</item>
         <item name="android:drawableStart">@drawable/icon_start</item>
