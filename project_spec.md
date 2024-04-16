@@ -78,6 +78,10 @@ Required Feature
 <img src="https://imgur.com/uFN5Q0j.png" width=600>
 
 ### [BONUS] Digital Wireframes & Mockups
+<img src="https://imgur.com/9K70uSp.png" width=600>
+<br><br>
+
+<img src="https://imgur.com/uFN5Q0j.png" width=600>
 
 ### [BONUS] Interactive Prototype
 
