@@ -1,4 +1,4 @@
-package com.example.and101_final_project
+package com.example.nearbyeats
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
