@@ -19,15 +19,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.codepath.asynchttpclient.AsyncHttpClient
 import com.codepath.asynchttpclient.RequestHeaders
 import com.codepath.asynchttpclient.RequestParams
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import com.google.android.gms.location.*
 import okhttp3.Headers
+import okhttp3.internal.http2.Header
+import kotlin.math.log
 
 
 class HomeActivity : AppCompatActivity() {
+    private lateinit var restaurantList : MutableList<Restaurant>
+    private lateinit var rvRestaurant: RecyclerView
 
     private lateinit var searchBar : EditText
 
@@ -37,6 +44,15 @@ class HomeActivity : AppCompatActivity() {
     private var lat = 0.0
     private var long = 0.0
     private var category = ""
+
+    private var restaurantName: String = ""
+    private var restaurantImageURL: String = ""
+    private var restaurantAddress: String = ""
+    private var restaurantLat: Double = 0.0
+    private var restaurantLong: Double = 0.0
+    private var restaurantRating: Double = 0.0
+    private var restaurantPrice: String = ""
+    private var restaurantReview: Int = 0
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,7 +100,10 @@ class HomeActivity : AppCompatActivity() {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 category = searchBar.text.toString()
 
+                rvRestaurant = findViewById(R.id.recycler_view)
+
                 getRestaurants(category)
+
 
                 return@setOnEditorActionListener true
             }
@@ -92,6 +111,7 @@ class HomeActivity : AppCompatActivity() {
             false
         }
 
+        restaurantList = mutableListOf()
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -208,19 +228,43 @@ class HomeActivity : AppCompatActivity() {
         client.setReadTimeout(10)
         client.setConnectTimeout(10)
         val params = RequestParams()
-        params.put("limit", 5)
+        params.put("limit", 10)
         params.put("latitude", "$lat")
         params.put("longitude", "$long")
         params.put("categories", "$category")
         params.put("sort_by", "best_match")
         val requestHeaders = RequestHeaders()
-        requestHeaders.put("Authorization", "Bearer ${BuildConfig.api_key}")
+        requestHeaders.put("Authorization", "bearer 7pa7_fFDHDqlNQemwW_K4BT7R2uf7TFkm0dbdDm2Rr4RwZIt6OnPSyQ0b6xeYfxlOs3qCBTNMCRhKP3FZ6BIYJV_VOgLeJYeQjDB27bMl4oLukYE8d-6y1mRw4sYZnYx")  //"bearer $ {BuildConfig.api_key}"
         requestHeaders.put("accept", "application/json")
 
         client.get("https://api.yelp.com/v3/businesses/search", requestHeaders, params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Headers, json: JsonHttpResponseHandler.JSON) {
                 Log.d("response", "$json")
+
+                val jsonArray = json.jsonObject.getJSONArray("businesses")
+
+                restaurantList.clear()
+
+                for(i in 0 until jsonArray.length()){
+                    val businessJson = jsonArray.getJSONObject(i)
+
+                    restaurantName = businessJson.getString("name")
+                    restaurantImageURL = businessJson.getString("image_url")
+                    restaurantAddress = businessJson.getJSONObject("location").getString("address1")
+                    restaurantLat = businessJson.getJSONObject("coordinates").getDouble("latitude")
+                    restaurantLong = businessJson.getJSONObject("coordinates").getDouble("longitude")
+                    restaurantRating = businessJson.getDouble("rating")
+                    restaurantPrice = if(businessJson.has("price")) businessJson.getString("price") else ""
+                    restaurantReview = businessJson.getInt("review_count")
+
+                    val restaurantInfo = Restaurant(restaurantName, restaurantImageURL, restaurantAddress, restaurantLat, restaurantLong, restaurantRating, restaurantPrice, restaurantReview)
+                    restaurantList.add(restaurantInfo)
+                }
+
+                val adapter = RestaurantAdapter(restaurantList)
+                rvRestaurant.adapter = adapter
+                rvRestaurant.layoutManager = LinearLayoutManager(this@HomeActivity)
             }
 
             override fun onFailure(
@@ -229,7 +273,7 @@ class HomeActivity : AppCompatActivity() {
                 errorResponse: String,
                 throwable: Throwable?
             ) {
-                Log.d("Error", errorResponse)
+                Log.d("response", errorResponse)
             }
         })
 

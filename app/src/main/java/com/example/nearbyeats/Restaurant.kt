@@ -7,6 +7,6 @@ data class Restaurant (
     val latitude: Double,
     val longitude: Double,
     val ratings: Double,
-    val price: Double,
+    val price: String,
     val reviews: Int
 )
