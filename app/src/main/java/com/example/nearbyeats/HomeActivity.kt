@@ -28,11 +28,11 @@ import com.codepath.asynchttpclient.RequestParams
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import com.google.android.gms.location.*
 import okhttp3.Headers
+import kotlin.math.log
 
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var restaurantList : MutableList<Restaurant>
-    private lateinit var rvRestaurant : RecyclerView
 
     private lateinit var searchBar : EditText
 
@@ -43,6 +43,14 @@ class HomeActivity : AppCompatActivity() {
     private var long = 0.0
     private var category = ""
 
+    private var restaurantName: String = ""
+    private var restaurantImageURL: String = ""
+    private var restaurantAddress: String = ""
+    private var restaurantLat: Double = 0.0
+    private var restaurantLong: Double = 0.0
+    private var restaurantRating: Double = 0.0
+    private var restaurantPrice: String = ""
+    private var restaurantReview: Int = 0
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,7 +107,6 @@ class HomeActivity : AppCompatActivity() {
         }
 
         restaurantList = mutableListOf()
-        rvRestaurant = findViewById(R.id.recycler_view)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -222,7 +229,7 @@ class HomeActivity : AppCompatActivity() {
         params.put("categories", "$category")
         params.put("sort_by", "best_match")
         val requestHeaders = RequestHeaders()
-        requestHeaders.put("Authorization", "Your API KEY")  //"bearer $ {BuildConfig.api_key}"
+        requestHeaders.put("Authorization", "bearer your apikey")  //"bearer $ {BuildConfig.api_key}"
         requestHeaders.put("accept", "application/json")
 
         client.get("https://api.yelp.com/v3/businesses/search", requestHeaders, params, object : JsonHttpResponseHandler() {
@@ -230,10 +237,27 @@ class HomeActivity : AppCompatActivity() {
             override fun onSuccess(statusCode: Int, headers: Headers, json: JsonHttpResponseHandler.JSON) {
                 Log.d("response", "$json")
 
+                val jsonArray = json.jsonObject.getJSONArray("businesses")
+
+                restaurantList.clear()
+
+                for(i in 0 until jsonArray.length()){
+                    val businessJson = jsonArray.getJSONObject(i)
+
+                    restaurantName = businessJson.getString("name")
+                    restaurantImageURL = businessJson.getString("image_url")
+                    restaurantAddress = businessJson.getJSONObject("location").getString("address1")
+                    restaurantLat = businessJson.getJSONObject("coordinates").getDouble("latitude")
+                    restaurantLong = businessJson.getJSONObject("coordinates").getDouble("longitude")
+                    restaurantRating = businessJson.getDouble("rating")
+                    restaurantPrice = if(businessJson.has("price")) businessJson.getString("price") else ""
+                    restaurantReview = businessJson.getInt("review_count")
+
+                    val restaurantInfo = Restaurant(restaurantName, restaurantImageURL, restaurantAddress, restaurantLat, restaurantLong, restaurantRating, restaurantPrice, restaurantReview)
+                    restaurantList.add(restaurantInfo)
+                }
+
                 val adapter = RestaurantAdapter(restaurantList)
-                rvRestaurant.adapter = adapter
-                rvRestaurant.layoutManager = LinearLayoutManager(this@HomeActivity)
-                rvRestaurant.addItemDecoration(DividerItemDecoration(this@HomeActivity, LinearLayoutManager.VERTICAL))
             }
 
             override fun onFailure(

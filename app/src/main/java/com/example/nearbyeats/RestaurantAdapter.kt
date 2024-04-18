@@ -47,7 +47,7 @@ class RestaurantAdapter(private val restaurantList: List<Restaurant>) : Recycler
         holder.restaurantName.text = restaurantItem.name
         holder.restaurantDirection.text = restaurantItem.address
         holder.restaurantRating.text = restaurantItem.ratings.toString()
-        holder.restaurantPrice.text = restaurantItem.price.toString()
+        holder.restaurantPrice.text = restaurantItem.price
     }
 }
 
