@@ -19,6 +19,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.codepath.asynchttpclient.AsyncHttpClient
 import com.codepath.asynchttpclient.RequestHeaders
 import com.codepath.asynchttpclient.RequestParams
@@ -28,6 +31,8 @@ import okhttp3.Headers
 
 
 class HomeActivity : AppCompatActivity() {
+    private lateinit var restaurantList : MutableList<Restaurant>
+    private lateinit var rvRestaurant : RecyclerView
 
     private lateinit var searchBar : EditText
 
@@ -37,6 +42,7 @@ class HomeActivity : AppCompatActivity() {
     private var lat = 0.0
     private var long = 0.0
     private var category = ""
+
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,6 +98,8 @@ class HomeActivity : AppCompatActivity() {
             false
         }
 
+        restaurantList = mutableListOf()
+        rvRestaurant = findViewById(R.id.recycler_view)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -214,13 +222,18 @@ class HomeActivity : AppCompatActivity() {
         params.put("categories", "$category")
         params.put("sort_by", "best_match")
         val requestHeaders = RequestHeaders()
-        requestHeaders.put("Authorization", "Bearer ${BuildConfig.api_key}")
+        requestHeaders.put("Authorization", "Your API KEY")  //"bearer $ {BuildConfig.api_key}"
         requestHeaders.put("accept", "application/json")
 
         client.get("https://api.yelp.com/v3/businesses/search", requestHeaders, params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Headers, json: JsonHttpResponseHandler.JSON) {
                 Log.d("response", "$json")
+
+                val adapter = RestaurantAdapter(restaurantList)
+                rvRestaurant.adapter = adapter
+                rvRestaurant.layoutManager = LinearLayoutManager(this@HomeActivity)
+                rvRestaurant.addItemDecoration(DividerItemDecoration(this@HomeActivity, LinearLayoutManager.VERTICAL))
             }
 
             override fun onFailure(
