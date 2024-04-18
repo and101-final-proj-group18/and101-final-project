@@ -48,11 +48,9 @@ class HomeActivity : AppCompatActivity() {
     private var restaurantName: String = ""
     private var restaurantImageURL: String = ""
     private var restaurantAddress: String = ""
-    private var restaurantLat: Double = 0.0
-    private var restaurantLong: Double = 0.0
-    private var restaurantRating: Double = 0.0
+    private var restaurantRating: String = ""
     private var restaurantPrice: String = ""
-    private var restaurantReview: Int = 0
+    private var restaurantReview: String = ""
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -252,13 +250,12 @@ class HomeActivity : AppCompatActivity() {
                     restaurantName = businessJson.getString("name")
                     restaurantImageURL = businessJson.getString("image_url")
                     restaurantAddress = businessJson.getJSONObject("location").getString("address1")
-                    restaurantLat = businessJson.getJSONObject("coordinates").getDouble("latitude")
-                    restaurantLong = businessJson.getJSONObject("coordinates").getDouble("longitude")
-                    restaurantRating = businessJson.getDouble("rating")
+                    restaurantRating = businessJson.getString("rating")
                     restaurantPrice = if(businessJson.has("price")) businessJson.getString("price") else ""
-                    restaurantReview = businessJson.getInt("review_count")
+                    restaurantReview = businessJson.getString("review_count")
 
-                    val restaurantInfo = Restaurant(restaurantName, restaurantImageURL, restaurantAddress, restaurantLat, restaurantLong, restaurantRating, restaurantPrice, restaurantReview)
+
+                    val restaurantInfo = Restaurant(restaurantName, restaurantImageURL, restaurantAddress, restaurantRating, restaurantPrice, restaurantReview)
                     restaurantList.add(restaurantInfo)
                 }
 

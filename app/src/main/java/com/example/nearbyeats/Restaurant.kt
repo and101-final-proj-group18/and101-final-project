@@ -4,9 +4,7 @@ data class Restaurant (
     val name: String,
     val image_url: String,
     val address: String,
-    val latitude: Double,
-    val longitude: Double,
-    val ratings: Double,
+    val ratings: String,
     val price: String,
-    val reviews: Int
+    val reviews: String
 )

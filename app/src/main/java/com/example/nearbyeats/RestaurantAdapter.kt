@@ -38,6 +38,11 @@ class RestaurantAdapter(private val restaurantList: List<Restaurant>) : Recycler
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        fun hasDigit(input: String): Boolean {
+            return input.any { it.isDigit() }
+        }
+
         val restaurantItem = restaurantList[position]
         Glide.with(holder.itemView)
             .load(restaurantItem.image_url)
@@ -46,8 +51,13 @@ class RestaurantAdapter(private val restaurantList: List<Restaurant>) : Recycler
 
         holder.restaurantName.text = restaurantItem.name
         holder.restaurantDirection.text = restaurantItem.address
-        holder.restaurantRating.text = restaurantItem.ratings.toString()
-        holder.restaurantPrice.text = restaurantItem.price
+        holder.restaurantRating.text = "${restaurantItem.ratings} (${restaurantItem.reviews})"
+        holder.restaurantPrice.text = if (hasDigit(restaurantItem.price)) {
+            restaurantItem.price
+        }
+        else {
+            "Price unavailable"
+        }
     }
 }
 
