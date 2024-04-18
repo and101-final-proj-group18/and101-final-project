@@ -34,6 +34,7 @@ import kotlin.math.log
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var restaurantList : MutableList<Restaurant>
+    private lateinit var rvRestaurant: RecyclerView
 
     private lateinit var searchBar : EditText
 
@@ -99,7 +100,10 @@ class HomeActivity : AppCompatActivity() {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 category = searchBar.text.toString()
 
+                rvRestaurant = findViewById(R.id.recycler_view)
+
                 getRestaurants(category)
+
 
                 return@setOnEditorActionListener true
             }
@@ -224,13 +228,13 @@ class HomeActivity : AppCompatActivity() {
         client.setReadTimeout(10)
         client.setConnectTimeout(10)
         val params = RequestParams()
-        params.put("limit", 5)
+        params.put("limit", 10)
         params.put("latitude", "$lat")
         params.put("longitude", "$long")
         params.put("categories", "$category")
         params.put("sort_by", "best_match")
         val requestHeaders = RequestHeaders()
-        requestHeaders.put("Authorization", "bearer your apikey")  //"bearer $ {BuildConfig.api_key}"
+        requestHeaders.put("Authorization", "bearer 7pa7_fFDHDqlNQemwW_K4BT7R2uf7TFkm0dbdDm2Rr4RwZIt6OnPSyQ0b6xeYfxlOs3qCBTNMCRhKP3FZ6BIYJV_VOgLeJYeQjDB27bMl4oLukYE8d-6y1mRw4sYZnYx")  //"bearer $ {BuildConfig.api_key}"
         requestHeaders.put("accept", "application/json")
 
         client.get("https://api.yelp.com/v3/businesses/search", requestHeaders, params, object : JsonHttpResponseHandler() {
@@ -259,6 +263,8 @@ class HomeActivity : AppCompatActivity() {
                 }
 
                 val adapter = RestaurantAdapter(restaurantList)
+                rvRestaurant.adapter = adapter
+                rvRestaurant.layoutManager = LinearLayoutManager(this@HomeActivity)
             }
 
             override fun onFailure(
@@ -267,7 +273,7 @@ class HomeActivity : AppCompatActivity() {
                 errorResponse: String,
                 throwable: Throwable?
             ) {
-                Log.d("Error", errorResponse)
+                Log.d("response", errorResponse)
             }
         })
 
