@@ -19,7 +19,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.codepath.asynchttpclient.AsyncHttpClient
+import com.codepath.asynchttpclient.RequestHeaders
+import com.codepath.asynchttpclient.RequestParams
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import com.google.android.gms.location.*
+import okhttp3.Headers
+import okhttp3.internal.http2.Header
 
 
 class HomeActivity : AppCompatActivity() {
@@ -74,6 +82,7 @@ class HomeActivity : AppCompatActivity() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         getLastLocation()
+        getListofRestaurants()
     }
 
     @SuppressLint("MissingPermission")
@@ -178,4 +187,31 @@ class HomeActivity : AppCompatActivity() {
         searchBar.setFocusable(true)
         searchBar.setCursorVisible(false)
     }
+
+    //working with the yelp API: 7pa7_fFDHDqlNQemwW_K4BT7R2uf7TFkm0dbdDm2Rr4RwZIt6OnPSyQ0b6xeYfxlOs3qCBTNMCRhKP3FZ6BIYJV_VOgLeJYeQjDB27bMl4oLukYE8d-6y1mRw4sYZnYx
+    private fun getListofRestaurants() {
+        val client = AsyncHttpClient()
+
+        val apiKey = "7pa7_fFDHDqlNQemwW_K4BT7R2uf7TFkm0dbdDm2Rr4RwZIt6OnPSyQ0b6xeYfxlOs3qCBTNMCRhKP3FZ6BIYJV_VOgLeJYeQjDB27bMl4oLukYE8d-6y1mRw4sYZnYx"
+        val authHeader = "Bearer $apiKey"
+        val requestHeaders = RequestHeaders();
+        requestHeaders.put("Authorization", authHeader);
+        requestHeaders.put("accept", "application/json");
+        val params =  RequestParams();
+
+        client["https://api.yelp.com/v3/businesses/search?location=newarkde&sort_by=best_match&limit=20", requestHeaders, params, object: JsonHttpResponseHandler() {
+            override fun onSuccess(statusCode: Int, headers: Headers, json: JsonHttpResponseHandler.JSON) {
+                Log.d("Yelp", "response successful$json")
+            }
+
+            override fun onFailure(
+                statusCode: Int,
+                headers: Headers?,
+                errorResponse: String,
+                throwable: Throwable?
+            ) {
+                Log.d("Yelp", errorResponse)
+            }
+        }]
+}
 }
