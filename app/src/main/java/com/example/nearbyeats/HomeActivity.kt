@@ -237,7 +237,7 @@ class HomeActivity : AppCompatActivity() {
         params.put("categories", "$category")
         params.put("sort_by", "best_match")
         val requestHeaders = RequestHeaders()
-        requestHeaders.put("Authorization", "bearer 7pa7_fFDHDqlNQemwW_K4BT7R2uf7TFkm0dbdDm2Rr4RwZIt6OnPSyQ0b6xeYfxlOs3qCBTNMCRhKP3FZ6BIYJV_VOgLeJYeQjDB27bMl4oLukYE8d-6y1mRw4sYZnYx")  //"bearer $ {BuildConfig.api_key}"
+        requestHeaders.put("Authorization", "bearer your_api_key")  //"bearer $ {BuildConfig.api_key}"
         requestHeaders.put("accept", "application/json")
 
         client.get("https://api.yelp.com/v3/businesses/search", requestHeaders, params, object : JsonHttpResponseHandler() {
