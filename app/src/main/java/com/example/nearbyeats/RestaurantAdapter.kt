@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
@@ -48,6 +49,17 @@ class RestaurantAdapter(private val restaurantList: List<Restaurant>) : Recycler
         holder.restaurantDirection.text = restaurantItem.address
         holder.restaurantRating.text = restaurantItem.ratings.toString()
         holder.restaurantPrice.text = restaurantItem.price
+        holder.restaurantName.setOnClickListener{
+            val context = holder.itemView.context
+            val phoneNumber = restaurantItem.phone
+            var closed = "closed"
+            closed = if(restaurantItem.closed){
+                "closed"
+            } else{
+                "open"
+            }
+            Toast.makeText(context, "Restaurant is currently $closed, phone number is $phoneNumber", Toast.LENGTH_LONG).show()
+        }
     }
 }
 

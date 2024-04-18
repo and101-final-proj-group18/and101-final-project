@@ -26,6 +26,7 @@ import com.codepath.asynchttpclient.AsyncHttpClient
 import com.codepath.asynchttpclient.RequestHeaders
 import com.codepath.asynchttpclient.RequestParams
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
+import com.google.android.gms.common.internal.FallbackServiceBroker
 import com.google.android.gms.location.*
 import okhttp3.Headers
 import okhttp3.internal.http2.Header
@@ -53,6 +54,8 @@ class HomeActivity : AppCompatActivity() {
     private var restaurantRating: Double = 0.0
     private var restaurantPrice: String = ""
     private var restaurantReview: Int = 0
+    private var restaurantClosed: Boolean = false
+    private var restaurantPhone: String = ""
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -257,8 +260,10 @@ class HomeActivity : AppCompatActivity() {
                     restaurantRating = businessJson.getDouble("rating")
                     restaurantPrice = if(businessJson.has("price")) businessJson.getString("price") else ""
                     restaurantReview = businessJson.getInt("review_count")
+                    restaurantClosed = businessJson.getBoolean("is_closed")
+                    restaurantPhone = businessJson.getString("display_phone")
 
-                    val restaurantInfo = Restaurant(restaurantName, restaurantImageURL, restaurantAddress, restaurantLat, restaurantLong, restaurantRating, restaurantPrice, restaurantReview)
+                    val restaurantInfo = Restaurant(restaurantName, restaurantImageURL, restaurantAddress, restaurantLat, restaurantLong, restaurantRating, restaurantPrice, restaurantReview, restaurantClosed, restaurantPhone)
                     restaurantList.add(restaurantInfo)
                 }
 

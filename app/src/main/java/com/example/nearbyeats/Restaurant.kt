@@ -8,5 +8,7 @@ data class Restaurant (
     val longitude: Double,
     val ratings: Double,
     val price: String,
-    val reviews: Int
+    val reviews: Int,
+    val closed: Boolean,
+    val phone: String
 )
