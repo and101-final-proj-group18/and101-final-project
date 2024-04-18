@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.drawable.Drawable
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
@@ -13,6 +12,7 @@ import android.os.Looper
 import android.provider.Settings
 import android.util.Log
 import android.view.MotionEvent
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.codepath.asynchttpclient.AsyncHttpClient
 import com.codepath.asynchttpclient.RequestHeaders
 import com.codepath.asynchttpclient.RequestParams
@@ -28,14 +29,30 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import com.google.android.gms.location.*
 import okhttp3.Headers
 import okhttp3.internal.http2.Header
+import kotlin.math.log
 
 
 class HomeActivity : AppCompatActivity() {
+    private lateinit var restaurantList : MutableList<Restaurant>
 
     private lateinit var searchBar : EditText
 
     private lateinit var fusedLocationClient : FusedLocationProviderClient
     private val PERMISSION_ID = 42
+
+    private var lat = 0.0
+    private var long = 0.0
+    private var category = ""
+
+    private var restaurantName: String = ""
+    private var restaurantImageURL: String = ""
+    private var restaurantAddress: String = ""
+    private var restaurantLat: Double = 0.0
+    private var restaurantLong: Double = 0.0
+    private var restaurantRating: Double = 0.0
+    private var restaurantPrice: String = ""
+    private var restaurantReview: Int = 0
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,11 +95,23 @@ class HomeActivity : AppCompatActivity() {
             false
         }
 
+        searchBar.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                category = searchBar.text.toString()
+
+                getRestaurants(category)
+
+                return@setOnEditorActionListener true
+            }
+
+            false
+        }
+
+        restaurantList = mutableListOf()
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         getLastLocation()
-        getListofRestaurants()
     }
 
     @SuppressLint("MissingPermission")
@@ -94,7 +123,8 @@ class HomeActivity : AppCompatActivity() {
                     if (location == null) {
                         requestNewLocationData()
                     } else {
-                        Toast.makeText(this, "Lat: ${location.latitude} Long: ${location.longitude}", Toast.LENGTH_SHORT).show()
+                        lat = location.latitude
+                        long = location.longitude
                     }
                 }
             } else {
@@ -187,21 +217,48 @@ class HomeActivity : AppCompatActivity() {
         searchBar.setFocusable(true)
         searchBar.setCursorVisible(false)
     }
+    private fun getRestaurants(category: String) {
 
-    //working with the yelp API: 7pa7_fFDHDqlNQemwW_K4BT7R2uf7TFkm0dbdDm2Rr4RwZIt6OnPSyQ0b6xeYfxlOs3qCBTNMCRhKP3FZ6BIYJV_VOgLeJYeQjDB27bMl4oLukYE8d-6y1mRw4sYZnYx
-    private fun getListofRestaurants() {
         val client = AsyncHttpClient()
 
-        val apiKey = "7pa7_fFDHDqlNQemwW_K4BT7R2uf7TFkm0dbdDm2Rr4RwZIt6OnPSyQ0b6xeYfxlOs3qCBTNMCRhKP3FZ6BIYJV_VOgLeJYeQjDB27bMl4oLukYE8d-6y1mRw4sYZnYx"
-        val authHeader = "Bearer $apiKey"
-        val requestHeaders = RequestHeaders();
-        requestHeaders.put("Authorization", authHeader);
-        requestHeaders.put("accept", "application/json");
-        val params =  RequestParams();
+        client.setReadTimeout(10)
+        client.setConnectTimeout(10)
+        val params = RequestParams()
+        params.put("limit", 5)
+        params.put("latitude", "$lat")
+        params.put("longitude", "$long")
+        params.put("categories", "$category")
+        params.put("sort_by", "best_match")
+        val requestHeaders = RequestHeaders()
+        requestHeaders.put("Authorization", "bearer your apikey")  //"bearer $ {BuildConfig.api_key}"
+        requestHeaders.put("accept", "application/json")
 
-        client["https://api.yelp.com/v3/businesses/search?location=newarkde&sort_by=best_match&limit=20", requestHeaders, params, object: JsonHttpResponseHandler() {
+        client.get("https://api.yelp.com/v3/businesses/search", requestHeaders, params, object : JsonHttpResponseHandler() {
+
             override fun onSuccess(statusCode: Int, headers: Headers, json: JsonHttpResponseHandler.JSON) {
-                Log.d("Yelp", "response successful$json")
+                Log.d("response", "$json")
+
+                val jsonArray = json.jsonObject.getJSONArray("businesses")
+
+                restaurantList.clear()
+
+                for(i in 0 until jsonArray.length()){
+                    val businessJson = jsonArray.getJSONObject(i)
+
+                    restaurantName = businessJson.getString("name")
+                    restaurantImageURL = businessJson.getString("image_url")
+                    restaurantAddress = businessJson.getJSONObject("location").getString("address1")
+                    restaurantLat = businessJson.getJSONObject("coordinates").getDouble("latitude")
+                    restaurantLong = businessJson.getJSONObject("coordinates").getDouble("longitude")
+                    restaurantRating = businessJson.getDouble("rating")
+                    restaurantPrice = if(businessJson.has("price")) businessJson.getString("price") else ""
+                    restaurantReview = businessJson.getInt("review_count")
+
+                    val restaurantInfo = Restaurant(restaurantName, restaurantImageURL, restaurantAddress, restaurantLat, restaurantLong, restaurantRating, restaurantPrice, restaurantReview)
+                    restaurantList.add(restaurantInfo)
+                }
+
+                val adapter = RestaurantAdapter(restaurantList)
             }
 
             override fun onFailure(
@@ -210,8 +267,9 @@ class HomeActivity : AppCompatActivity() {
                 errorResponse: String,
                 throwable: Throwable?
             ) {
-                Log.d("Yelp", errorResponse)
+                Log.d("Error", errorResponse)
             }
-        }]
-}
+        })
+
+    }
 }
