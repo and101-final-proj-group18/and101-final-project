@@ -26,6 +26,7 @@ import com.codepath.asynchttpclient.AsyncHttpClient
 import com.codepath.asynchttpclient.RequestHeaders
 import com.codepath.asynchttpclient.RequestParams
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
+import com.google.android.gms.common.internal.FallbackServiceBroker
 import com.google.android.gms.location.*
 import okhttp3.Headers
 import okhttp3.internal.http2.Header
@@ -50,7 +51,12 @@ class HomeActivity : AppCompatActivity() {
     private var restaurantAddress: String = ""
     private var restaurantRating: String = ""
     private var restaurantPrice: String = ""
+
     private var restaurantReview: String = ""
+
+    private var restaurantClosed: Boolean = false
+    private var restaurantPhone: String = ""
+
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -232,7 +238,7 @@ class HomeActivity : AppCompatActivity() {
         params.put("categories", "$category")
         params.put("sort_by", "best_match")
         val requestHeaders = RequestHeaders()
-        requestHeaders.put("Authorization", "bearer 7pa7_fFDHDqlNQemwW_K4BT7R2uf7TFkm0dbdDm2Rr4RwZIt6OnPSyQ0b6xeYfxlOs3qCBTNMCRhKP3FZ6BIYJV_VOgLeJYeQjDB27bMl4oLukYE8d-6y1mRw4sYZnYx")  //"bearer $ {BuildConfig.api_key}"
+        requestHeaders.put("Authorization", "Bearer ${BuildConfig.api_key}")  //"bearer $ {BuildConfig.api_key}"
         requestHeaders.put("accept", "application/json")
 
         client.get("https://api.yelp.com/v3/businesses/search", requestHeaders, params, object : JsonHttpResponseHandler() {
@@ -253,9 +259,21 @@ class HomeActivity : AppCompatActivity() {
                     restaurantRating = businessJson.getString("rating")
                     restaurantPrice = if(businessJson.has("price")) businessJson.getString("price") else ""
                     restaurantReview = businessJson.getString("review_count")
+                    restaurantClosed = businessJson.getBoolean("is_closed")
+                    restaurantPhone = businessJson.getString("display_phone")
 
 
-                    val restaurantInfo = Restaurant(restaurantName, restaurantImageURL, restaurantAddress, restaurantRating, restaurantPrice, restaurantReview)
+                    val restaurantInfo = Restaurant(
+                        restaurantName,
+                        restaurantImageURL,
+                        restaurantAddress,
+                        restaurantRating,
+                        restaurantPrice,
+                        restaurantReview,
+                        restaurantClosed,
+                        restaurantPhone)
+
+
                     restaurantList.add(restaurantInfo)
                 }
 

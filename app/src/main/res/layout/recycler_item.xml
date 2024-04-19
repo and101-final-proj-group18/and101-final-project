@@ -19,17 +19,35 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/imageContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:cardCornerRadius="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" >
 
-                <ImageView
-                    android:id="@+id/featured_image"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginStart="16dp"
-                    android:contentDescription="@string/image_description"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/avatars" />
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="8dp"
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:id="@+id/featured_image"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:contentDescription="@string/image_description"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:srcCompat="@tools:sample/avatars" />
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.cardview.widget.CardView>
 
                 <TextView
                     android:theme="@style/title"
@@ -38,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="@string/restaurant_name"
-                    app:layout_constraintStart_toEndOf="@+id/featured_image"
+                    app:layout_constraintStart_toEndOf="@+id/imageContainer"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -48,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="@string/direction"
-                    app:layout_constraintStart_toEndOf="@+id/featured_image"
+                    app:layout_constraintStart_toEndOf="@+id/imageContainer"
                     app:layout_constraintTop_toBottomOf="@+id/restaurant_name" />
 
                 <TextView
@@ -58,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="@string/ratings_reviews"
-                    app:layout_constraintStart_toEndOf="@+id/featured_image"
+                    app:layout_constraintStart_toEndOf="@+id/imageContainer"
                     app:layout_constraintTop_toBottomOf="@+id/direction" />
 
                 <TextView
@@ -68,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="@string/price_range"
-                    app:layout_constraintStart_toEndOf="@+id/featured_image"
+                    app:layout_constraintStart_toEndOf="@+id/imageContainer"
                     app:layout_constraintTop_toBottomOf="@+id/ratings_reviews" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
