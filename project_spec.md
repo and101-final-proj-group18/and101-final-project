@@ -30,14 +30,14 @@ Tired of not being able to choose a place to eat that satisfies your cravings? B
 
 Required Features:
 
-- Users will be asked for their location
-- Users can view a list of restaurants close to them
-- Users can filter results by cuisine
-- Users can view restaurant phone number and image
+- [x] Users will be asked for their location
+- [x] Users can view a list of restaurants close to them
+- [x] Users can filter results by cuisine
+- [x] Users can view restaurant phone number and image
 
 Stretch Features:
 
-- Users can view restaurant's Yelp rating
+- [x] Users can view restaurant's Yelp rating
 - Users can filter by restaurant's yelp rating
 - Users can filter by restaurants price range
 
@@ -53,11 +53,11 @@ Stretch Features:
 Required Feature
 
 - Get restaurant names:
-    - The user can filter by and see the names of restaurants near them
+    - [x] The user can see the names of restaurants near them
 - Get restaurant price range:
-    - The user can see the price ranges of the restaurants near them
+    - [x]The user can see the price ranges of the restaurants near them
 - Filter by cuisine
-    - The user can filter the restaurants near them by selecting a cuisine through a checkbox or button
+    - [x] The user can filter the restaurants near them by selecting a cuisine through a checkbox or button
   
 
 ## Wireframes
