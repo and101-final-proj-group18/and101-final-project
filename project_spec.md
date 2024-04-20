@@ -91,7 +91,7 @@ process, or what you learned this unit!
 For Milestone 2, include **2+ Videos/GIFs** of the build process here!
 
 Build Process:
-<img src="https://imgur.com/17xRwpN" width=600>
+<img src="https://i.imgur.com/17xRwpN.gif" width=600>
 
 <img src="https://i.imgur.com/ELcE9Cx.gif" width=600>
 
