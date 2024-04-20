@@ -38,8 +38,8 @@ Required Features:
 Stretch Features:
 
 - [x] Users can view restaurant's Yelp rating
-- Users can filter by restaurant's yelp rating
-- Users can filter by restaurants price range
+- [] Users can filter by restaurant's yelp rating
+- []Users can filter by restaurants price range
 
 ### 2. Chosen API(s): Yelp API
 
@@ -55,7 +55,7 @@ Required Feature
 - Get restaurant names:
     - [x] The user can see the names of restaurants near them
 - Get restaurant price range:
-    - [x]The user can see the price ranges of the restaurants near them
+    - [x] The user can see the price ranges of the restaurants near them
 - Filter by cuisine
     - [x] The user can filter the restaurants near them by selecting a cuisine through a checkbox or button
   
