@@ -51,7 +51,7 @@ Here's a place for any other notes on this milestone!
 
 --------------------------------------------------------------------
 
-# AND101 Milestone 2 - **Team/App Name**
+# AND101 Milestone 2 - **NearByeats**
 
 Submitted by:
 - **Malika Iyer**
