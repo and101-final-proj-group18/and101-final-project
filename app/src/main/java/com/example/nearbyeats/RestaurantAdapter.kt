@@ -53,7 +53,7 @@ class RestaurantAdapter(private val restaurantList: List<Restaurant>) : Recycler
         holder.restaurantName.text = restaurantItem.name
         holder.restaurantDirection.text = restaurantItem.address
         holder.restaurantRating.text = "${restaurantItem.ratings} (${restaurantItem.reviews})"
-        holder.restaurantPrice.text = if ((restaurantItem.price) != "") {
+        holder.restaurantPrice.text = if (hasDigit(restaurantItem.price)) {
             restaurantItem.price
         }
         else {
