@@ -102,7 +102,7 @@ class HomeActivity : AppCompatActivity() {
 
         searchBar.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                category = searchBar.text.toString()
+                category = searchBar.text.toString().lowercase()
 
                 rvRestaurant = findViewById(R.id.recycler_view)
 
@@ -236,6 +236,7 @@ class HomeActivity : AppCompatActivity() {
         params.put("latitude", "$lat")
         params.put("longitude", "$long")
         params.put("categories", "$category")
+        Log.d("coords", "$lat & $long")
         params.put("sort_by", "best_match")
         val requestHeaders = RequestHeaders()
         requestHeaders.put("Authorization", "Bearer ${BuildConfig.api_key}")  //"bearer ${BuildConfig.api_key}"
