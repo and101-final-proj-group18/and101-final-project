@@ -68,7 +68,12 @@ class RestaurantAdapter(private val restaurantList: List<Restaurant>) : Recycler
 
         holder.restaurantName.setOnClickListener{
             val context = holder.itemView.context
-            val phoneNumber = restaurantItem.phone
+            val phoneNumber = if ((restaurantItem.phone) == ""){
+                "unavailable"
+            }
+            else{
+                restaurantItem.phone
+            }
             var closed = "closed"
             closed = if(!restaurantItem.closed){
                 "closed"
