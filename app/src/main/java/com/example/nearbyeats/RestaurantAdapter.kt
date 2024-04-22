@@ -27,6 +27,17 @@ class RestaurantAdapter(private val restaurantList: List<Restaurant>) : Recycler
         }
     }
 
+    companion object{
+        private val priceRange = mapOf(
+            "$" to "Under $10",
+            "$$" to "$11-30",
+            "$$$" to "$31-60",
+            "$$$$" to "Over $61"
+
+        )
+
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.recycler_item, parent, false)
@@ -53,12 +64,7 @@ class RestaurantAdapter(private val restaurantList: List<Restaurant>) : Recycler
         holder.restaurantName.text = restaurantItem.name
         holder.restaurantDirection.text = restaurantItem.address
         holder.restaurantRating.text = "${restaurantItem.ratings} (${restaurantItem.reviews})"
-        holder.restaurantPrice.text = if (hasDigit(restaurantItem.price)) {
-            restaurantItem.price
-        }
-        else {
-            "Price unavailable"
-        }
+        holder.restaurantPrice.text = priceRange[restaurantItem.price] ?: "Price Unavailable"
 
         holder.restaurantName.setOnClickListener{
             val context = holder.itemView.context
