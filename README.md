@@ -51,14 +51,14 @@ Here's a place for any other notes on this milestone!
 
 --------------------------------------------------------------------
 
-# AND101 Milestone 2 - **NearByeats**
+# AND101 Milestone 2 - **NearByEats**
 
 Submitted by:
 - **Malika Iyer**
 - **Joshua Olaoye**
 - **Mari Hirota**
 
-Time spent: **6** hours spent in total
+Time spent: **10** hours spent in total
 
 ## Summary
 
@@ -79,8 +79,8 @@ The following REQUIRED files are included:
   - [x] Checked off 2+ completed features
   - [x] 2+ Videos/GIFs of build progress
 
-- [ ] Our 🎥 Demo Video
-  - [ ] We have also added the Demo Video Link to the Group Info Form on the course portal.
+- [x] Our 🎥 Demo Video
+  - [x] We have also added the Demo Video Link to the Group Info Form on the course portal.
 
 The following EXTRA features are implemented:
 
@@ -90,9 +90,9 @@ The following EXTRA features are implemented:
 
 Here's a video that demos all of the app's implemented features:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Demo' width='' alt='Video Demo' />
+<iframe width="560" height="315" src="https://www.youtube.com/embed/zc6o96Qe0UU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-VIDEO created with **your chosen video tool**
+VIDEO created with **iMovie**
 
 ## Notes
 
