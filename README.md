@@ -1,5 +1,15 @@
 <!-- (This is a comment) INSTRUCTIONS: Go through this page and fill out any **bolded** entries with their correct values.-->
 
+## 🎥 Demo Video
+
+Here's a video that demos all of the app's implemented features:
+
+[![nearbyeats demo video](https://img.youtube.com/vi/zc6o96Qe0UU/0.jpg)](https://www.youtube.com/watch?v=zc6o96Qe0UU)
+
+VIDEO created with **iMovie**
+
+------
+
 # AND101 Milestone 1 - **NearByEats**
 
 Submitted by:
@@ -85,14 +95,6 @@ The following REQUIRED files are included:
 The following EXTRA features are implemented:
 
 - [ ] List anything else that you added to improve your submission!
-
-## 🎥 Demo Video
-
-Here's a video that demos all of the app's implemented features:
-
-[![nearbyeats demo video](https://img.youtube.com/vi/zc6o96Qe0UU/0.jpg)](https://www.youtube.com/watch?v=zc6o96Qe0UU)
-
-VIDEO created with **iMovie**
 
 ## Notes
 
